@@ -20,7 +20,8 @@ class UserController extends Controller
         //return view('admin.users.index')->with(['users' => $users]);
         //return view('admin.users.index')->with(['users' => User::all()]);
         //return view('admin.users.index', compact('users'));
-        return view('admin.users.index', ['users' => User::all()]);
+        //return view('admin.users.index', ['users' => User::all()]);
+        return view('admin.users.index', ['users' => User::paginate(10)]);
 
     }
 
