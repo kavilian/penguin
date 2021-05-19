@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        //$users = User::all();
 
         //return view('admin.users.index')->with(['users' => $users]);
         //return view('admin.users.index')->with(['users' => User::all()]);
@@ -32,7 +33,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.users.create', ['roles' => Role::all()]);
     }
 
     /**
@@ -43,7 +44,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request);
+        $user = User::create($request->except(['_token', 'roles']));
+        //dd($user);
+        $user->roles()->sync($request->roles);
     }
 
     /**
