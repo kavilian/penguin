@@ -21,40 +21,51 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.users.index') }}">Users</a>
-                        </li>
-        
-                    </ul>
-                    <div class="d-flex">
-                        @if (Route::has('login'))
-                            <div class="">
-                                @auth
-                                    <a href="{{ url('/home') }}" class="">Home</a>
-                                    <a href="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                
+                <div class="d-flex">
+                    @if (Route::has('login'))
+                        <div class="">
+                            @auth
+                                <a href="{{ url('/home') }}" class="">Home</a>
+                                <a href="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
 
-                                    <form id="logout-form" method="POST" action="{{ route('logout') }}" style="display: none">
-                                        @csrf
-                                    </form>
-                                @else
-                                    <a href="{{ route('login') }}" class="">Log in</a>
+                                <form id="logout-form" method="POST" action="{{ route('logout') }}" style="display: none">
+                                    @csrf
+                                </form>
+                            @else
+                                <a href="{{ route('login') }}" class="">Log in</a>
 
-                                    @if (Route::has('register'))
-                                        <a href="{{ route('register') }}" class="">Register</a>
-                                    @endif
-                                @endauth
-                            </div>
-                        @endif
-                    </div>
+                                @if (Route::has('register'))
+                                    <a href="{{ route('register') }}" class="">Register</a>
+                                @endif
+                            @endauth
+                        </div>
+                    @endif
                 </div>
+                
             </div>
         </nav>
 
+        @can('logged-in')
+            <nav class="navbar navbar-expand-lg sub-nav">
+                <div class="container">
+                    
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="#">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.users.index') }}">Users</a>
+                            </li>
+            
+                        </ul>
+                        
+                    </div>
+                </div>
+            </nav>
+        @endcan
+        
         <main class="container">
             @include('partials.alerts')
             @yield('content')
