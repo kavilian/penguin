@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserRequest;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -42,10 +43,19 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
+
         //dd($request);
-        $user = User::create($request->except(['_token', 'roles']));
+        // $validatedData = $request->validate([
+        //     'name' => 'required|max:255',
+        //     'email' => 'required|max:255|unique:users',
+        //     'password' => 'required|min:8|max:255'
+        // ]);
+        $validatedData = $request->validated();
+
+        //$user = User::create($request->except(['_token', 'roles']));
+        $user = User::create($validatedData);
         //dd($user);
         $user->roles()->sync($request->roles);
 
