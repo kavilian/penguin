@@ -49,6 +49,8 @@ class UserController extends Controller
         //dd($user);
         $user->roles()->sync($request->roles);
 
+        $request->session()->flash('success', 'You have created the user');
+
         return redirect()->route('admin.users.index');
     }
 
@@ -91,6 +93,8 @@ class UserController extends Controller
         $user->update($request->except('_token', 'roles'));
 
         $user->roles()->sync($request->roles);
+
+        $request->session()->flash('success', 'You have updated the user');
         return redirect()->route('admin.users.index');
     }
 
@@ -100,9 +104,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         User::destroy($id);
+
+        $request->session()->flash('success', 'You have deleted the user');
         //return redirect(route('admin.users.index'));
         return redirect()->route('admin.users.index');
         
