@@ -18,16 +18,23 @@ class UserController extends Controller
      */
     public function index()
     {
-        // if(Gate::denies('logged-in')) {
-        //     dd('no access allowed');
-        // }
+        if(Gate::denies('logged-in')) {
+            dd('no access allowed');
+        }
+
+        if(Gate::allows('is-admin')) {
+            return view('admin.users.index', ['users' => User::paginate(10)]);
+        }
+
         //$users = User::all();
 
         //return view('admin.users.index')->with(['users' => $users]);
         //return view('admin.users.index')->with(['users' => User::all()]);
         //return view('admin.users.index', compact('users'));
         //return view('admin.users.index', ['users' => User::all()]);
-        return view('admin.users.index', ['users' => User::paginate(10)]);
+        //return view('admin.users.index', ['users' => User::paginate(10)]);
+
+        dd('you need to be an admin');
 
     }
 
